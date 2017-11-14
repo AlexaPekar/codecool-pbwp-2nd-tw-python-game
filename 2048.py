@@ -1,18 +1,8 @@
 import random
 import sys
 
-points = 0
-game_box = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]
-first_position_list = [0,1,2,3]
-first_row_to_begin = random.choice(first_position_list)
-first_column_to_begin = random.choice(first_position_list)
-game_box[first_row_to_begin][first_column_to_begin] = 2
-
-second_position_list = [0,1,2,3]
-second_row_to_begin = random.choice(second_position_list)
-second_column_to_begin = random.choice(second_position_list)
-game_box[second_row_to_begin][second_column_to_begin] = 2
-
+FIRST_POSITION_LIST = [0,1,2,3]
+SECOND_POSITION_LIST = [0,1,2,3]
 
 def up_movement(game_box):
     i = 0
@@ -36,8 +26,7 @@ def up_movement(game_box):
                     game_box[i+2][j] = game_box[i+3][j]
                     game_box[i+3][j] = 0
 
-def up_addition(game_box):
-    global points
+def up_addition(game_box, points):
     i = 0
     for j in range(0,4):
         if game_box[i][j] == game_box[i+1][j]:
@@ -57,7 +46,7 @@ def up_addition(game_box):
             game_box[i+2][j] = game_box[i+2][j] + game_box[i+3][j]
             points += game_box[i+2][j] ** 2
             game_box[i+3][j] = 0
-
+    return points
 def up_check(game_box):
     for j in range(0,4):
         for i in range(0,3):
@@ -89,8 +78,7 @@ def down_movement(game_box):
                     game_box[i+1][j] = game_box[i][j]
                     game_box[i][j] = 0
 
-def down_addition(game_box):
-    global points
+def down_addition(game_box, points):
     i = 0
     for j in range(0,4):
         if game_box[i+3][j] == game_box[i+2][j]:
@@ -110,7 +98,7 @@ def down_addition(game_box):
             game_box[i+1][j] = game_box[i+1][j] + game_box[i][j]
             points += game_box[i+1][j] ** 2
             game_box[i][j] = 0
-
+    return points
 def down_check(game_box):
     for j in range(0,4):
         for i in range(0,3):
@@ -142,8 +130,7 @@ def left_movement(game_box):
                     game_box[i][j+2] = game_box[i][j+3]
                     game_box[i][j+3] = 0
        
-def left_addition(game_box):
-    global points
+def left_addition(game_box, points):
     j = 0
     for i in range(0,4):
         if game_box[i][j] == game_box[i][j+1]:
@@ -163,7 +150,7 @@ def left_addition(game_box):
             game_box[i][j+2] = game_box[i][j+2] + game_box[i][j+3]
             points += game_box[i][j+2] ** 2
             game_box[i][j+3] = 0
-         
+    return points    
 def left_check(game_box):
     for i in range(0,4):
         for j in range(0,3):
@@ -195,8 +182,7 @@ def right_movement(game_box):
                     game_box[i][j+1] = game_box[i][j]
                     game_box[i][j] = 0
             
-def right_addition(game_box):
-    global points
+def right_addition(game_box, points):
     j = 0
     for i in range(0,4):
         if game_box[i][j+3] == game_box[i][j+2]:
@@ -216,7 +202,7 @@ def right_addition(game_box):
             game_box[i][j+1] = game_box[i][j+1] + game_box[i][j]
             points += game_box[i][j+1] ** 2
             game_box[i][j] = 0
-
+    return points
 def right_check(game_box):
     for i in range(0,4):
         for j in range(0,3):
@@ -236,33 +222,41 @@ def getchar():
     finally:
         termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
 
-def game_box_stage():
+def game_play():
+    points = 0
+    game_box = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]
+
+    first_row_to_begin = random.choice(FIRST_POSITION_LIST)
+    first_column_to_begin = random.choice(FIRST_POSITION_LIST)
+    game_box[first_row_to_begin][first_column_to_begin] = 2
+
+    second_row_to_begin = random.choice(SECOND_POSITION_LIST)
+    second_column_to_begin = random.choice(SECOND_POSITION_LIST)
+    game_box[second_row_to_begin][second_column_to_begin] = 2
+
+    while True:
+        print('Moves: "w"=up, "s"=down, "a"=left, "d"=right')
+        print("Points: " + str(points))          
         print(game_box[0][0], '\t', game_box[0][1], '\t', game_box[0][2], '\t', game_box[0][3], '\n')
         print(game_box[1][0], '\t', game_box[1][1], '\t', game_box[1][2], '\t', game_box[1][3], '\n')
         print(game_box[2][0], '\t', game_box[2][1], '\t', game_box[2][2], '\t', game_box[2][3], '\n')
         print(game_box[3][0], '\t', game_box[3][1], '\t', game_box[3][2], '\t', game_box[3][3], '\n')
-
-def game_play():
-    while True:
-        print('Moves: "w"=up, "s"=down, "a"=left, "d"=right')
-        print("Points: " + str(points))          
-        game_box_stage()
         print('Choose your movement or press "q" to exit: ')
 
         movement_choice = getchar()
 
         if movement_choice == 'w':
             up_movement(game_box)
-            up_addition(game_box)
+            points = up_addition(game_box, points)
         elif movement_choice == 's':
             down_movement(game_box)
-            down_addition(game_box)
+            points = down_addition(game_box, points)
         elif movement_choice == 'a':
             left_movement(game_box)
-            left_addition(game_box)
+            points = left_addition(game_box, points)
         elif movement_choice == 'd':
             right_movement(game_box)
-            right_addition(game_box)
+            points = right_addition(game_box, points)
         elif movement_choice == 'q':
             exit()
         else:
@@ -278,8 +272,11 @@ def game_play():
                 if game_box[i][j] == 0:              
                     row_indexes_with_zero.append(i)
                     column_indexes_with_zero.append(j)
-                elif game_box[i][j] == 2048:
-                    game_box_stage()
+                elif game_box[i][j] == 8:
+                    print(game_box[0][0], '\t', game_box[0][1], '\t', game_box[0][2], '\t', game_box[0][3], '\n')
+                    print(game_box[1][0], '\t', game_box[1][1], '\t', game_box[1][2], '\t', game_box[1][3], '\n')
+                    print(game_box[2][0], '\t', game_box[2][1], '\t', game_box[2][2], '\t', game_box[2][3], '\n')
+                    print(game_box[3][0], '\t', game_box[3][1], '\t', game_box[3][2], '\t', game_box[3][3], '\n')
                     print('Congratulations, you are the CHICKEN WINNER!')
                     print('Total points:' + str(points))
                     exit()
@@ -310,10 +307,6 @@ def play_again():
     else:
         print("Not a valid answer!")
 
-#another_round = True
-#while another_round:
-#    another_round = game_play()
-
 def main():
     while True:
         game_play()
@@ -321,7 +314,6 @@ def main():
             return
 
 if __name__ == '__main__':
-    main()
-    sys.exit()
-
-print("Bye-bye")
+    main() 
+    print("Bye-bye")
+    exit()

@@ -269,7 +269,7 @@ while True:
             if game_box[i][j] == 0:              
                 row_indexes_with_zero.append(i)
                 column_indexes_with_zero.append(j)
-            elif game_box[i][j] == 2048:
+            elif game_box[i][j] == 8:
                 print('Congratulations, you are the CHICKEN WINNER!')
                 print('Total points:' + str(points))
                 break

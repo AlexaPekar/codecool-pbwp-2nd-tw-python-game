@@ -1,11 +1,17 @@
 import random
+import sys
+
 points = 0
-invalid_input = 0
 game_box = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]
 first_position_list = [0,1,2,3]
 first_row_to_begin = random.choice(first_position_list)
 first_column_to_begin = random.choice(first_position_list)
 game_box[first_row_to_begin][first_column_to_begin] = 2
+
+second_position_list = [0,1,2,3]
+second_row_to_begin = random.choice(second_position_list)
+second_column_to_begin = random.choice(second_position_list)
+game_box[second_row_to_begin][second_column_to_begin] = 2
 
 
 def up_movement(game_box):
@@ -229,7 +235,7 @@ def getchar():
         return sys.stdin.read(1)
     finally:
         termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
-        
+
 def game_box_stage():
         print(game_box[0][0], '\t', game_box[0][1], '\t', game_box[0][2], '\t', game_box[0][3], '\n')
         print(game_box[1][0], '\t', game_box[1][1], '\t', game_box[1][2], '\t', game_box[1][3], '\n')
@@ -241,9 +247,8 @@ def game_play():
         print('Moves: "w"=up, "s"=down, "a"=left, "d"=right')
         print("Points: " + str(points))          
         game_box_stage()
-
-        
         print('Choose your movement or press "q" to exit: ')
+
         movement_choice = getchar()
 
         if movement_choice == 'w':
@@ -261,6 +266,7 @@ def game_play():
         elif movement_choice == 'q':
             exit()
         else:
+            invalid_input = 0
             invalid_input += 1
             continue
         
@@ -272,7 +278,7 @@ def game_play():
                 if game_box[i][j] == 0:              
                     row_indexes_with_zero.append(i)
                     column_indexes_with_zero.append(j)
-                elif game_box[i][j] == 8:
+                elif game_box[i][j] == 2048:
                     game_box_stage()
                     print('Congratulations, you are the CHICKEN WINNER!')
                     print('Total points:' + str(points))
@@ -291,8 +297,31 @@ def game_play():
             continue
         elif len(row_indexes_with_zero) == 0:
             break
-            
+
     print('Total points: ' + str(points))
     print('GAME OVER!!4! But... Thanks for playing! ;-) ')
 
-game_play()
+def play_again():
+    again = str(input("Do you want to play again? Y/n :"))
+    if again == "n":
+        return False
+    elif again == "Y":
+        return True  
+    else:
+        print("Not a valid answer!")
+
+#another_round = True
+#while another_round:
+#    another_round = game_play()
+
+def main():
+    while True:
+        game_play()
+        if not play_again():
+            return
+
+if __name__ == '__main__':
+    main()
+    sys.exit()
+
+print("Bye-bye")

@@ -229,64 +229,69 @@ def getchar():
         return sys.stdin.read(1)
     finally:
         termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
-
-
-while True:
-    print('Moves: "w"=up, "s"=down, "a"=left, "d"=right')
-    print("Points: " + str(points))          
-    print(game_box[0][0], '\t', game_box[0][1], '\t', game_box[0][2], '\t', game_box[0][3], '\n')
-    print(game_box[1][0], '\t', game_box[1][1], '\t', game_box[1][2], '\t', game_box[1][3], '\n')
-    print(game_box[2][0], '\t', game_box[2][1], '\t', game_box[2][2], '\t', game_box[2][3], '\n')
-    print(game_box[3][0], '\t', game_box[3][1], '\t', game_box[3][2], '\t', game_box[3][3], '\n')
-
-    
-    print('Choose your movement or press "q" to exit: ')
-    movement_choice = getchar()
-
-    if movement_choice == 'w':
-        up_movement(game_box)
-        up_addition(game_box)
-    elif movement_choice == 's':
-        down_movement(game_box)
-        down_addition(game_box)
-    elif movement_choice == 'a':
-        left_movement(game_box)
-        left_addition(game_box)
-    elif movement_choice == 'd':
-        right_movement(game_box)
-        right_addition(game_box)
-    elif movement_choice == 'q':
-        exit()
-    else:
-        invalid_input += 1
-        continue
-    
-    row_indexes_with_zero = []
-    column_indexes_with_zero = []
-
-    for i in range(0,4):
-        for j in range(0,4):
-            if game_box[i][j] == 0:              
-                row_indexes_with_zero.append(i)
-                column_indexes_with_zero.append(j)
-            elif game_box[i][j] == 8:
-                print('Congratulations, you are the CHICKEN WINNER!')
-                print('Total points:' + str(points))
-                break
-
-    if len(row_indexes_with_zero) > 1:
-        random_index = row_indexes_with_zero.index(random.choice(row_indexes_with_zero))
-        row_to_place_item = row_indexes_with_zero[random_index]
-        column_to_place_item = column_indexes_with_zero[random_index]
-        game_box[row_to_place_item][column_to_place_item] = 2
-    elif len(row_indexes_with_zero) == 1:
-        row_to_place_item = row_indexes_with_zero[0]
-        column_to_place_item = column_indexes_with_zero[0]
-        game_box[row_to_place_item][column_to_place_item] = 2
-    elif up_check(game_box) or down_check(game_box) or left_check(game_box) or right_check(game_box):
-        continue
-    elif len(row_indexes_with_zero) == 0:
-        break
         
-print('Total points: ' + str(points))
-print('GAME OVER!!4! But... Thanks for playing! ;-) ') 
+def game_box_stage():
+        print(game_box[0][0], '\t', game_box[0][1], '\t', game_box[0][2], '\t', game_box[0][3], '\n')
+        print(game_box[1][0], '\t', game_box[1][1], '\t', game_box[1][2], '\t', game_box[1][3], '\n')
+        print(game_box[2][0], '\t', game_box[2][1], '\t', game_box[2][2], '\t', game_box[2][3], '\n')
+        print(game_box[3][0], '\t', game_box[3][1], '\t', game_box[3][2], '\t', game_box[3][3], '\n')
+
+def game_play():
+    while True:
+        print('Moves: "w"=up, "s"=down, "a"=left, "d"=right')
+        print("Points: " + str(points))          
+        game_box_stage()
+        
+        print('Choose your movement or press "q" to exit: ')
+        movement_choice = getchar()
+
+        if movement_choice == 'w':
+            up_movement(game_box)
+            up_addition(game_box)
+        elif movement_choice == 's':
+            down_movement(game_box)
+            down_addition(game_box)
+        elif movement_choice == 'a':
+            left_movement(game_box)
+            left_addition(game_box)
+        elif movement_choice == 'd':
+            right_movement(game_box)
+            right_addition(game_box)
+        elif movement_choice == 'q':
+            exit()
+        else:
+            invalid_input += 1
+            continue
+        
+        row_indexes_with_zero = []
+        column_indexes_with_zero = []
+
+        for i in range(0,4):
+            for j in range(0,4):
+                if game_box[i][j] == 0:              
+                    row_indexes_with_zero.append(i)
+                    column_indexes_with_zero.append(j)
+                elif game_box[i][j] == 8:
+                    game_box_stage()
+                    print('Congratulations, you are the CHICKEN WINNER!')
+                    print('Total points:' + str(points))
+                    exit()
+
+        if len(row_indexes_with_zero) > 1:
+            random_index = row_indexes_with_zero.index(random.choice(row_indexes_with_zero))
+            row_to_place_item = row_indexes_with_zero[random_index]
+            column_to_place_item = column_indexes_with_zero[random_index]
+            game_box[row_to_place_item][column_to_place_item] = 2
+        elif len(row_indexes_with_zero) == 1:
+            row_to_place_item = row_indexes_with_zero[0]
+            column_to_place_item = column_indexes_with_zero[0]
+            game_box[row_to_place_item][column_to_place_item] = 2
+        elif up_check(game_box) or down_check(game_box) or left_check(game_box) or right_check(game_box):
+            continue
+        elif len(row_indexes_with_zero) == 0:
+            break
+            
+    print('Total points: ' + str(points))
+    print('GAME OVER!!4! But... Thanks for playing! ;-) ')
+
+game_play()

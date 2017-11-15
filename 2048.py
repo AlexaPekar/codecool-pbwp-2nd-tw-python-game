@@ -258,6 +258,7 @@ def game_play():
             right_movement(game_box)
             points = right_addition(game_box, points)
         elif movement_choice == 'q':
+            print(Bye-bye)
             exit()
         else:
             invalid_input = 0
@@ -279,7 +280,7 @@ def game_play():
                     print(game_box[3][0], '\t', game_box[3][1], '\t', game_box[3][2], '\t', game_box[3][3], '\n')
                     print('Congratulations, you are the CHICKEN WINNER!')
                     print('Total points:' + str(points))
-                    exit()
+                    return
 
         if len(row_indexes_with_zero) > 1:
             random_index = row_indexes_with_zero.index(random.choice(row_indexes_with_zero))

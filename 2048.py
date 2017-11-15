@@ -225,6 +225,11 @@ def getchar():
 def game_play():
     points = 0
     game_box = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]
+    for i in range(4):
+        for j in range(4):
+            cell = game_box[i][j]
+            if cell == 0:
+                cell = " "
 
     first_row_to_begin = random.choice(FIRST_POSITION_LIST)
     first_column_to_begin = random.choice(FIRST_POSITION_LIST)
@@ -234,14 +239,23 @@ def game_play():
     second_column_to_begin = random.choice(SECOND_POSITION_LIST)
     game_box[second_row_to_begin][second_column_to_begin] = 2
 
+    print("\nWelcome to the 2048 game!\n")
+    player_name = input("Please, enter your name: ")
+    print("\nDear " + str(player_name) +", good luck!\n")
+
     while True:
         print('Moves: "w"=up, "s"=down, "a"=left, "d"=right')
-        print("Points: " + str(points))          
-        print(game_box[0][0], '\t', game_box[0][1], '\t', game_box[0][2], '\t', game_box[0][3], '\n')
-        print(game_box[1][0], '\t', game_box[1][1], '\t', game_box[1][2], '\t', game_box[1][3], '\n')
-        print(game_box[2][0], '\t', game_box[2][1], '\t', game_box[2][2], '\t', game_box[2][3], '\n')
-        print(game_box[3][0], '\t', game_box[3][1], '\t', game_box[3][2], '\t', game_box[3][3], '\n')
-        print('Choose your movement or press "q" to exit: ')
+        print("Points: " + str(points) + "\n")
+        print("-----------------")
+        print("|", game_box[0][0], "|", game_box[0][1], "|", game_box[0][2], "|", game_box[0][3], "|")
+        print("-----------------")
+        print("|", game_box[1][0], "|", game_box[1][1], "|", game_box[1][2], "|", game_box[1][3], "|")
+        print("-----------------")
+        print("|", game_box[2][0], "|", game_box[2][1], "|", game_box[2][2], "|", game_box[2][3], "|")
+        print("-----------------")
+        print("|", game_box[3][0], "|", game_box[3][1], "|", game_box[3][2], "|", game_box[3][3], "|")
+        print("-----------------")
+        print('Choose your movement or press "q" to exit: \n')
 
         movement_choice = getchar()
 
@@ -258,7 +272,7 @@ def game_play():
             right_movement(game_box)
             points = right_addition(game_box, points)
         elif movement_choice == 'q':
-            print(Bye-bye)
+            print("We're looking forward to see you again! Bye-bye!")
             exit()
         else:
             invalid_input = 0
@@ -274,12 +288,17 @@ def game_play():
                     row_indexes_with_zero.append(i)
                     column_indexes_with_zero.append(j)
                 elif game_box[i][j] == 8:
-                    print(game_box[0][0], '\t', game_box[0][1], '\t', game_box[0][2], '\t', game_box[0][3], '\n')
-                    print(game_box[1][0], '\t', game_box[1][1], '\t', game_box[1][2], '\t', game_box[1][3], '\n')
-                    print(game_box[2][0], '\t', game_box[2][1], '\t', game_box[2][2], '\t', game_box[2][3], '\n')
-                    print(game_box[3][0], '\t', game_box[3][1], '\t', game_box[3][2], '\t', game_box[3][3], '\n')
-                    print('Congratulations, you are the CHICKEN WINNER!')
-                    print('Total points:' + str(points))
+                    print("-----------------")
+                    print("|", game_box[0][0], "|", game_box[0][1], "|", game_box[0][2], "|", game_box[0][3], "|")
+                    print("-----------------")
+                    print("|", game_box[1][0], "|", game_box[1][1], "|", game_box[1][2], "|", game_box[1][3], "|")
+                    print("-----------------")
+                    print("|", game_box[2][0], "|", game_box[2][1], "|", game_box[2][2], "|", game_box[2][3], "|")
+                    print("-----------------")
+                    print("|", game_box[3][0], "|", game_box[3][1], "|", game_box[3][2], "|", game_box[3][3], "|")
+                    print("-----------------")
+                    print("\nCongratulations, " + str(player_name) +", you are the CHICKEN WINNER!")
+                    print(str(player_name) + "'s total points: " + str(points))
                     return
 
         if len(row_indexes_with_zero) > 1:
@@ -296,17 +315,17 @@ def game_play():
         elif len(row_indexes_with_zero) == 0:
             break
 
-    print('Total points: ' + str(points))
-    print('GAME OVER!!4! But... Thanks for playing! ;-) ')
+    print("\nGAME OVER!!4! But... Thanks for playing! ;-) ")
+    print(str(player_name) + "'s total points: " + str(points))
 
 def play_again():
-    again = str(input("Do you want to play again? Y/n :"))
+    again = str(input("\nDo you want to play again? Y/n :"))
     if again == "n":
         return False
     elif again == "Y":
         return True  
     else:
-        print("Not a valid answer!")
+        print("Not valid answer!")
 
 def main():
     while True:
@@ -316,5 +335,5 @@ def main():
 
 if __name__ == '__main__':
     main() 
-    print("Bye-bye")
+    print("\nWe're looking forward to see you again! Bye-bye!")
     exit()

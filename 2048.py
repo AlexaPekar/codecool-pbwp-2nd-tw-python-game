@@ -1,5 +1,7 @@
 import random
 import sys
+from time import sleep
+import os
 
 
 FIRST_POSITION_LIST = [0,1,2,3]
@@ -224,20 +226,15 @@ def getchar():
     finally:
         termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
 
-def prRed(prt): print("\033[91;40m {} \033[00m" .format(prt))
+def prRed(prt): print("\033[91m {} \033[00m" .format(prt))
 def prGreen(prt): print("\033[92m {}\033[00m" .format(prt))
 def prBrightBlue(prt): print("\033[34m {}\033[00m" .format(prt))
 def prYellow(prt): print("\033[93m {}\033[00m" .format(prt))
-def prBrightCyan(prt): print("\033[36;40m {} \033[00m" .format(prt))
+def prBrightCyan(prt): print("\033[36m {} \033[00m" .format(prt))
 
 def game_play():
     points = 0
     game_box = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]
-    for i in range(4):
-        for j in range(4):
-            cell = game_box[i][j]
-            if cell == 0:
-                cell = " "
 
     first_row_to_begin = random.choice(FIRST_POSITION_LIST)
     first_column_to_begin = random.choice(FIRST_POSITION_LIST)
@@ -247,22 +244,23 @@ def game_play():
     second_column_to_begin = random.choice(SECOND_POSITION_LIST)
     game_box[second_row_to_begin][second_column_to_begin] = 2
 
-    prBrightCyan("\nWelcome to the 2048 game!\n")
+    os.system('clear')
+    prYellow("\nWelcome to the 2048 game!\n")
     player_name = input("Please, enter your name: ")
-    prBrightCyan("\nDear " + str(player_name) +", good luck!\n")
+    os.system('clear')
+    prYellow("\nDear " + str(player_name) +", good luck!\n")
+    sleep(3.0)
+    os.system('clear')
 
     while True:
         prBrightBlue('Moves: "w"=up, "s"=down, "a"=left, "d"=right')
         prGreen("Points: " + str(points) + "\n")
-        print("-----------------")
-        print("|", game_box[0][0], "|", game_box[0][1], "|", game_box[0][2], "|", game_box[0][3], "|")
-        print("-----------------")
-        print("|", game_box[1][0], "|", game_box[1][1], "|", game_box[1][2], "|", game_box[1][3], "|")
-        print("-----------------")
-        print("|", game_box[2][0], "|", game_box[2][1], "|", game_box[2][2], "|", game_box[2][3], "|")
-        print("-----------------")
-        print("|", game_box[3][0], "|", game_box[3][1], "|", game_box[3][2], "|", game_box[3][3], "|")
-        print("-----------------")
+        print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+        print(game_box[0][0], "\t", game_box[0][1], "\t", game_box[0][2], "\t", game_box[0][3], "\n")
+        print(game_box[1][0], "\t", game_box[1][1], "\t", game_box[1][2], "\t", game_box[1][3], "\n")
+        print(game_box[2][0], "\t", game_box[2][1], "\t", game_box[2][2], "\t", game_box[2][3], "\n")
+        print(game_box[3][0], "\t", game_box[3][1], "\t", game_box[3][2], "\t", game_box[3][3])
+        print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
         prBrightBlue('Choose your movement or press "q" to exit: \n')
 
         movement_choice = getchar()
@@ -270,17 +268,24 @@ def game_play():
         if movement_choice == 'w':
             up_movement(game_box)
             points = up_addition(game_box, points)
+            os.system('clear')
         elif movement_choice == 's':
             down_movement(game_box)
             points = down_addition(game_box, points)
+            os.system('clear')
         elif movement_choice == 'a':
             left_movement(game_box)
             points = left_addition(game_box, points)
+            os.system('clear')
         elif movement_choice == 'd':
             right_movement(game_box)
             points = right_addition(game_box, points)
+            os.system('clear')
         elif movement_choice == 'q':
-            prBrightBlue("We're looking forward to see you again! Bye-bye!")
+            os.system('clear')
+            prBrightBlue("\nWe're looking forward to see you again! Bye-bye!")
+            sleep(3.0)
+            os.system('clear')
             exit()
         else:
             invalid_input = 0
@@ -292,19 +297,16 @@ def game_play():
 
         for i in range(0,4):
             for j in range(0,4):
-                if game_box[i][j] == 0:              
+                if game_box[i][j] == 0:
                     row_indexes_with_zero.append(i)
                     column_indexes_with_zero.append(j)
-                elif game_box[i][j] == 8:
-                    print("-----------------")
-                    print("|", game_box[0][0], "|", game_box[0][1], "|", game_box[0][2], "|", game_box[0][3], "|")
-                    print("-----------------")
-                    print("|", game_box[1][0], "|", game_box[1][1], "|", game_box[1][2], "|", game_box[1][3], "|")
-                    print("-----------------")
-                    print("|", game_box[2][0], "|", game_box[2][1], "|", game_box[2][2], "|", game_box[2][3], "|")
-                    print("-----------------")
-                    print("|", game_box[3][0], "|", game_box[3][1], "|", game_box[3][2], "|", game_box[3][3], "|")
-                    print("-----------------")
+                elif game_box[i][j] == 2048:
+                    print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+                    print(game_box[0][0], "\t", game_box[0][1], "\t", game_box[0][2], "\t", game_box[0][3], "\n")
+                    print(game_box[1][0], "\t", game_box[1][1], "\t", game_box[1][2], "\t", game_box[1][3], "\n")
+                    print(game_box[2][0], "\t", game_box[2][1], "\t", game_box[2][2], "\t", game_box[2][3], "\n")
+                    print(game_box[3][0], "\t", game_box[3][1], "\t", game_box[3][2], "\t", game_box[3][3])
+                    print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
                     prYellow("\nCongratulations, " + str(player_name) +", you are the CHICKEN WINNER!")
                     prGreen(str(player_name) + "'s total points: " + str(points))
                     return
@@ -321,20 +323,26 @@ def game_play():
         elif up_check(game_box) or down_check(game_box) or left_check(game_box) or right_check(game_box):
             continue
         elif len(row_indexes_with_zero) == 0:
+            print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+            print(game_box[0][0], "\t", game_box[0][1], "\t", game_box[0][2], "\t", game_box[0][3], "\n")
+            print(game_box[1][0], "\t", game_box[1][1], "\t", game_box[1][2], "\t", game_box[1][3], "\n")
+            print(game_box[2][0], "\t", game_box[2][1], "\t", game_box[2][2], "\t", game_box[2][3], "\n")
+            print(game_box[3][0], "\t", game_box[3][1], "\t", game_box[3][2], "\t", game_box[3][3])
+            print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
             break
 
     prRed("\nGAME OVER!!4! But... Thanks for playing! ;-) ")
     prGreen(str(player_name) + "'s total points: " + str(points))
 
 def play_again():
-    again = str(input("\nDo you want to play again? Y/n :"))
+    again = str(input('\nDo you want to play again? Yes, of course: "y" / Never again!: "n": '))
     if again == "n":
         return False
     elif again == "Y":
-        return True  
-    else:
-        print("Not valid answer!")
-
+        return True
+    elif again != "Y" or "n":
+        print("Invalid answer!")
+        
 def main():
     while True:
         game_play()
@@ -342,6 +350,8 @@ def main():
             return
 
 if __name__ == '__main__':
-    main() 
-    prBrightBlue("\nWe're looking forward to see you again! Bye-bye!")
+    main()
+    prYellow("\nWe're looking forward to see you again! Bye-bye!")
+    sleep(3.0)
+    os.system('clear')
     exit()

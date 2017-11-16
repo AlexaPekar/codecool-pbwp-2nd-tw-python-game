@@ -1,8 +1,11 @@
 import random
 import sys
 from time import sleep
+<<<<<<< HEAD
 import os
 
+=======
+>>>>>>> e646bc3d24df4b83d627febe75a34f6198a0260a
 
 FIRST_POSITION_LIST = [0,1,2,3]
 SECOND_POSITION_LIST = [0,1,2,3]
@@ -244,6 +247,7 @@ def game_play():
     second_column_to_begin = random.choice(SECOND_POSITION_LIST)
     game_box[second_row_to_begin][second_column_to_begin] = 2
 
+<<<<<<< HEAD
     os.system('clear')
     prYellow("\nWelcome to the 2048 game!\n")
     player_name = input("Please, enter your name: ")
@@ -251,6 +255,11 @@ def game_play():
     prYellow("\nDear " + str(player_name) +", good luck!\n")
     sleep(3.0)
     os.system('clear')
+=======
+    prYellow("\nWelcome to the 2048 game!\n")
+    player_name = input("Please, enter your name: ")
+    prYellow("\nDear " + str(player_name) +", good luck!\n")
+>>>>>>> e646bc3d24df4b83d627febe75a34f6198a0260a
 
     while True:
         prBrightBlue('Moves: "w"=up, "s"=down, "a"=left, "d"=right')
@@ -301,12 +310,19 @@ def game_play():
                     row_indexes_with_zero.append(i)
                     column_indexes_with_zero.append(j)
                 elif game_box[i][j] == 2048:
+<<<<<<< HEAD
                     print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
                     print(game_box[0][0], "\t", game_box[0][1], "\t", game_box[0][2], "\t", game_box[0][3], "\n")
                     print(game_box[1][0], "\t", game_box[1][1], "\t", game_box[1][2], "\t", game_box[1][3], "\n")
                     print(game_box[2][0], "\t", game_box[2][1], "\t", game_box[2][2], "\t", game_box[2][3], "\n")
                     print(game_box[3][0], "\t", game_box[3][1], "\t", game_box[3][2], "\t", game_box[3][3])
                     print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+=======
+                    print(game_box[0][0], "\t", game_box[0][1], "\t", game_box[0][2], "\t", game_box[0][3], "\n")
+                    print(game_box[1][0], "\t", game_box[1][1], "\t", game_box[1][2], "\t", game_box[1][3], "\n")
+                    print(game_box[2][0], "\t", game_box[2][1], "\t", game_box[2][2], "\t", game_box[2][3], "\n")
+                    print(game_box[3][0], "\t", game_box[3][1], "\t", game_box[3][2], "\t", game_box[3][3], "\n")
+>>>>>>> e646bc3d24df4b83d627febe75a34f6198a0260a
                     prYellow("\nCongratulations, " + str(player_name) +", you are the CHICKEN WINNER!")
                     prGreen(str(player_name) + "'s total points: " + str(points))
                     return
@@ -350,8 +366,13 @@ def main():
             return
 
 if __name__ == '__main__':
+<<<<<<< HEAD
     main()
     prYellow("\nWe're looking forward to see you again! Bye-bye!")
     sleep(3.0)
     os.system('clear')
+=======
+    main() 
+    prYellow("\nWe're looking forward to see you again! Bye-bye!")
+>>>>>>> e646bc3d24df4b83d627febe75a34f6198a0260a
     exit()

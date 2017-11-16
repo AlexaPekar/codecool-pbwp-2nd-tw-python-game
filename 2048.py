@@ -481,7 +481,7 @@ def play_again():
     elif again == "y":
         return True
     elif again != "y" or "n":
-        print("\nInvalid answer!")
+        print("\n\033[96mInvalid answer!\033[00m")
 
 
 def main():

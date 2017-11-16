@@ -229,6 +229,12 @@ def prGreen(prt): print("\033[92m {}\033[00m" .format(prt))
 def prBrightBlue(prt): print("\033[34m {}\033[00m" .format(prt))
 def prYellow(prt): print("\033[93m {}\033[00m" .format(prt))
 def prBrightCyan(prt): print("\033[36m {} \033[00m" .format(prt))
+#def colors_numbers(game_box):
+ #   colors = {2:(176, 224, 230), 4:(127, 255, 212)}
+  #  for i in range(0,4):
+   #     for j in range(0,4):
+    #        printnum = game_box[i][j]
+     #       colors[printnum]
 
 def game_play():
     points = 0
@@ -242,6 +248,37 @@ def game_play():
     second_column_to_begin = random.choice(SECOND_POSITION_LIST)
     game_box[second_row_to_begin][second_column_to_begin] = 2
 
+
+    prBrightCyan("""
+
+                                                                            
+                                                                            
+ 222222222222222         000000000            444444444       888888888     
+2:::::::::::::::22     00:::::::::00         4::::::::4     88:::::::::88   
+2::::::222222:::::2  00:::::::::::::00      4:::::::::4   88:::::::::::::88 
+2222222     2:::::2 0:::::::000:::::::0    4::::44::::4  8::::::88888::::::8
+            2:::::2 0::::::0   0::::::0   4::::4 4::::4  8:::::8     8:::::8
+            2:::::2 0:::::0     0:::::0  4::::4  4::::4  8:::::8     8:::::8
+         2222::::2  0:::::0     0:::::0 4::::4   4::::4   8:::::88888:::::8 
+    22222::::::22   0:::::0 000 0:::::04::::444444::::444  8:::::::::::::8  
+  22::::::::222     0:::::0 000 0:::::04::::::::::::::::4 8:::::88888:::::8 
+ 2:::::22222        0:::::0     0:::::04444444444:::::4448:::::8     8:::::8
+2:::::2             0:::::0     0:::::0          4::::4  8:::::8     8:::::8
+2:::::2             0::::::0   0::::::0          4::::4  8:::::8     8:::::8
+2:::::2       2222220:::::::000:::::::0          4::::4  8::::::88888::::::8
+2::::::2222222:::::2 00:::::::::::::00         44::::::44 88:::::::::::::88 
+2::::::::::::::::::2   00:::::::::00           4::::::::4   88:::::::::88   
+22222222222222222222     000000000             4444444444     888888888     
+                                                                            
+                                                                            
+                                                                            
+                                                                            
+                                                                            
+                                                                            
+                                                                            
+
+""")
+    sleep(4.0)
     prYellow("\nWelcome to the 2048 game!\n")
     player_name = input("Please, enter your name: ")
     prYellow("\nDear " + str(player_name) +", good luck!\n")
@@ -262,15 +299,19 @@ def game_play():
         if movement_choice == 'w':
             up_movement(game_box)
             points = up_addition(game_box, points)
+            #colors_numbers(game_box)
         elif movement_choice == 's':
             down_movement(game_box)
             points = down_addition(game_box, points)
+            #colors_numbers(game_box)
         elif movement_choice == 'a':
             left_movement(game_box)
             points = left_addition(game_box, points)
+            #colors_numbers(game_box)
         elif movement_choice == 'd':
             right_movement(game_box)
             points = right_addition(game_box, points)
+            #colors_numbers(game_box)
         elif movement_choice == 'q':
             prBrightBlue("We're looking forward to see you again! Bye-bye!")
             exit()
